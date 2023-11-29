@@ -1,6 +1,6 @@
 import streamlit as st
 import requests
-
+from views import events_by_country
 
 category = st.sidebar.selectbox("Choose event details", options=["Map", 
 "Table", "View available events by date", "View available artist events by country", "View artist events per month"])
@@ -22,9 +22,7 @@ elif category == "View available events by date":
     st.table()
 elif category == "View available artist events by country":
     # TODO: Make available artist events by country Bar Chart
-    st.title("View available artist events by country")
-    st.markdown("This is a table of events in the world")
-    st.table()
+    events_by_country.get_artists_events_by_country("playboi carti")
 elif category == "View artist events per month":
     # TODO: Make artist events per month line chart
     st.title("View artist events per month")
