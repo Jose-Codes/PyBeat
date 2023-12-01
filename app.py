@@ -1,5 +1,6 @@
 import streamlit as st
 import requests
+from views import MapView
 
 
 category = st.sidebar.selectbox("Choose event details", options=["Map", 
@@ -9,7 +10,7 @@ if category == "Map":
     # TODO: Make Map
     st.title("Map of events")
     st.markdown("This is a map of events in the world")
-    st.map()
+    MapView.map_view()
 elif category == "Table":
     # TODO: Make Table
     st.title("Table of events")
