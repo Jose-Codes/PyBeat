@@ -27,7 +27,10 @@ elif category == "View available artist events by country":
     st.table()
 elif category == "View artist events per month":
     # TODO: Make artist events per month line chart
-    events_per_month.get_artists_event_per_month("playboi carti")
+    artist_name = st.text_input("Enter artist's name", "playboi carti")
+    
+    # Call the function with the user-input artist's name
+    events_per_month.get_artists_event_per_month(artist_name)
 else:
     # Default page view
     st.title("Map of events")
