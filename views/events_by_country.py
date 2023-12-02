@@ -3,21 +3,21 @@ import requests
 import pandas as pd
 
 def get_artists_events_by_country(artist):
-    
     #get time frame: upcoming, past, or specific range
     date = st.sidebar.selectbox("Choose event details", options=["Upcoming", "Past", "Specific range"])
 
+    #get specific range
     if date == "Specific range":
         start_date = st.sidebar.date_input("Start date:")
         end_date = st.sidebar.date_input("End date:")
         date = str(start_date) + ',' + str(end_date)
 
-    
+    #api endpoints
     artist_events_url = f"https://rest.bandsintown.com/artists/{artist}/events?app_id=foo&date={date.lower()}"
     events_result = requests.get(artist_events_url).json()
 
     if not events_result:
-        st.title("No events found for this artist.")
+        st.warning("No events found for this artist.", icon="⚠️")
 
     else:
         event_count = {} #country:count
