@@ -31,4 +31,4 @@ def get_artists_event_per_month(artist):
         artist_name = events_result[0]["artist"]["name"]
 
         st.markdown(f"<h1 style='text-align: center'>{artist_name}'s shows per month</h1>", unsafe_allow_html=True)
-        st.bar_chart(chart_data, x="Month", y="# of Shows")
+        st.line_chart(chart_data.set_index("Month"))
