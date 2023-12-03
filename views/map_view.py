@@ -53,10 +53,10 @@ def map_view(artist_name="Metallica"):
     coords, cities = [], []
     
     # Checkbox to toggle area filter
-    st.session_state.filter_by_area = st.checkbox("Filter by area", value=False)
+    st.session_state.near_me = st.checkbox("Near me", value=False)
 
     with st.form(key='event_form'):        
-        if st.session_state.filter_by_area:
+        if st.session_state.near_me:
             # Number input for radius
             st.session_state.radius = st.number_input("Enter radius in miles", value=1000)
 
@@ -66,7 +66,7 @@ def map_view(artist_name="Metallica"):
     if submit_button:
         event_coordinates, event_cities = get_event_coordinates(artist_name)
         if event_coordinates is not None:
-            if st.session_state.filter_by_area:
+            if st.session_state.near_me:
                 user_location = get_user_location()  # You'll need to implement this function
                 filtered_coordinates, filtered_cities = filter_events_by_area(event_coordinates, event_cities, 
                                                                               user_location, radius=st.session_state.radius)
