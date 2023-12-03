@@ -35,9 +35,12 @@ def map_creator(locations, cities):
 def get_event_coordinates(artist_name="Metallica"):
     events_url = f"https://rest.bandsintown.com/artists/{artist_name}/events?app_id=foo"
     events = requests.get(events_url).json()
+    if 'errorMessage' in events.keys():
+        st.error(events['errorMessage'])
+        return None, None
     event_coordinates = [] # List of tuples
     event_cities = [] # List of strings
-    if len(events) == 0:
+    if not events:
         st.error("No events found for " + artist_name)
     else:
         # Use st.json to display the JSON response on the app screen
@@ -46,11 +49,11 @@ def get_event_coordinates(artist_name="Metallica"):
             country, city = event["venue"]["country"], event["venue"]["city"]
             event_cities.append(f"{country}, {city}")
         return event_coordinates, event_cities
+    return [], []
 
 def map_view(artist_name="Metallica"):
     st.title("Map of Events")
     st.markdown("This is a map of events in the world.")
-    coords, cities = [], []
     
     # Checkbox to toggle area filter
     st.session_state.near_me = st.checkbox("Near me", value=False)
@@ -65,6 +68,7 @@ def map_view(artist_name="Metallica"):
     # When the user clicks the submit button, the code within this if block will run
     if submit_button:
         event_coordinates, event_cities = get_event_coordinates(artist_name)
+            
         if event_coordinates is not None:
             if st.session_state.near_me:
                 user_location = get_user_location()  # You'll need to implement this function
@@ -83,6 +87,8 @@ def map_view(artist_name="Metallica"):
 
         else:
             st.error("No events found for " + artist_name)
+            m = folium.Map()
+            folium_static(m)
 
 def haversine(coord1, coord2):
     # Convert latitude and longitude from degrees to radians
