@@ -10,7 +10,7 @@ from views import map_view
 
 with st.sidebar:
     artist = st.text_input("Search an Artist")
-    category = st.selectbox("Choose event details", options=["Map", "Table", "View available events by date", "View available artist events by country", "View artist events per month"])
+    category = st.selectbox("Choose event details", options=["Map", "Table", "View available artist events by country", "View artist events per month"])
 if(artist):
     if category == "Map":
         # TODO: Make Map
@@ -18,11 +18,6 @@ if(artist):
     elif category == "Table":
         # TODO: Make Table
         table_view.display_table(artist)
-    elif category == "View available events by date":
-        # TODO: Make available events by date Table
-        st.title("View available events by date")
-        st.markdown("This is a table of events in the world")
-        st.table()
     elif category == "View available artist events by country":
         # TODO: Make available artist events by country Bar Chart
         events_by_country.get_artists_events_by_country(artist)
