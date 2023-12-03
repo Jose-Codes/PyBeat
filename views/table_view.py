@@ -6,9 +6,9 @@ import pandas as pd
 def display_table(artist):
     artist_events_url = f"https://rest.bandsintown.com/artists/{artist}/events?app_id=foo"
     events_result = requests.get(artist_events_url).json()
-    df = pd.DataFrame(events_result)
 
-    if artist:
+    if artist and 'errorMessage' not in events_result.keys():
+        df = pd.DataFrame(events_result)
         if not df.empty:
             st.title(f"Table of {artist}'s events")
             table_data = df[['url', 'datetime', 'venue']]
@@ -34,3 +34,5 @@ def display_table(artist):
                                                                          }, column_order=("Event Date", "Location", "Venue Name", "Address", "Get Details"))
         else:
             st.warning("This artist is not having any events.")
+    else:
+        st.error("Please enter a valid artist name.")
