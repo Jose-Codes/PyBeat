@@ -6,6 +6,7 @@ import pandas as pd
 from views import events_by_country
 from views import events_per_month
 from views import table_view
+from views import map_view
 
 with st.sidebar:
     artist = st.text_input("Search an Artist")
@@ -15,7 +16,7 @@ if(artist):
         # TODO: Make Map
         st.title("Map of events")
         st.markdown("This is a map of events in the world")
-        st.map()
+        map_view.map_view(artist)
     elif category == "Table":
         # TODO: Make Table
         table_view.display_table(artist)
