@@ -16,7 +16,8 @@ def get_artists_event_per_month(artist):
 
     if not events_result:
         st.warning("No events found for this artist.", icon="⚠️")
-    
+    elif 'errorMessage' in events_result:
+        st.error("Please enter a valid artist name.", icon="⚠️")
     else:
         event_count = {} # month : count
 
