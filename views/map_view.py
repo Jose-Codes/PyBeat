@@ -36,7 +36,7 @@ def get_event_coordinates(artist_name="Metallica"):
     events_url = f"https://rest.bandsintown.com/artists/{artist_name}/events?app_id=foo"
     events = requests.get(events_url).json()
     if isinstance(events, dict) and 'errorMessage' in events.keys():
-        st.error(events['errorMessage'])
+        st.error(f"No events found for {artist_name}", icon="⚠️")
         return None, None
     event_coordinates = [] # List of tuples
     event_cities = [] # List of strings
