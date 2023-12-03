@@ -18,7 +18,8 @@ def get_artists_events_by_country(artist):
 
     if not events_result:
         st.warning("No events found for this artist.", icon="⚠️")
-
+    elif 'errorMessage' in events_result:
+        st.error("Please enter a valid artist name.", icon="⚠️")
     else:
         event_count = {} #country:count
 
