@@ -15,7 +15,7 @@ def get_artists_event_per_month(artist):
     events_result = requests.get(artist_events_url).json()
 
     if not events_result:
-        st.title("No events found for this artist.")
+        st.warning("No events found for this artist.", icon="⚠️")
     
     else:
         event_count = {} # month : count
@@ -23,7 +23,7 @@ def get_artists_event_per_month(artist):
         #iterate through response and get events per month
         for event in events_result:
             event_date = pd.to_datetime(event['datetime'])
-            month = event_date.strftime('%B')  # '%B' gives full month name
+            month = event_date.strftime('%Y %B')  # '%B' gives full month name
             event_count[month] = event_count.get(month, 0) + 1
 
         chart_data = pd.DataFrame(event_count.items(), columns=["Month", "# of Shows"])
