@@ -13,16 +13,12 @@ with st.sidebar:
     category = st.selectbox("Choose event details", options=["Map", "Table", "View available artist events by country", "View artist events per month"])
 if(artist):
     if category == "Map":
-        # TODO: Make Map
         map_view.map_view(artist)
     elif category == "Table":
-        # TODO: Make Table
         table_view.display_table(artist)
     elif category == "View available artist events by country":
-        # TODO: Make available artist events by country Bar Chart
         events_by_country.get_artists_events_by_country(artist)
     elif category == "View artist events per month":
-        # TODO: Make artist events per month line chart
         events_per_month.get_artists_event_per_month(artist)
     else:
         # Default page view
