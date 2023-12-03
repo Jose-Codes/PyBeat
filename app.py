@@ -1,6 +1,7 @@
 import streamlit as st
 import requests
 import pandas as pd
+
 with st.sidebar:
     category = st.selectbox("Choose event details", options=["Map", "Table", "View available events by date", "View available artist events by country", "View artist events per month"])
     artist = st.text_input("Search an Artist")
@@ -17,32 +18,17 @@ if category == "Map":
     st.map()
 
 elif category == "Table":
-    # TODO: Make Table
     st.title("Table of events")
     st.markdown("This is a table of events in the world")
-    # events(df)[
-    #     url,
-    #     datetime,
-    #     venue{location, name},
-    #     offers[]
-    # ]
-    table_data = df[['url', 'datetime', 'offers']]
-    table_data['datetime'] = pd.to_datetime(table_data['datetime'])
-    table_data['datetime_str'] = table_data['datetime'].dt.strftime(
-    '%Y-%m-%d %H:%M:%S')
-    table_data.drop('datetime_str', axis=1)
-    st.data_editor(table_data,
-                   column_config={
-                    'url': st.column_config.LinkColumn(
-                        "View More Details", 
-                        disabled=True, 
-                        width="medium"
-                    ),
-                   'datetime':st.column_config.DatetimeColumn(
-                        "Event Date",
-                        format="MMM Do, YYYY [at] h:mma z",
-                    )},
-                    hide_index=True)
+    table_data = df[['url', 'datetime', 'venue']]
+    table_data = pd.concat([table_data.drop(['venue'], axis=1), table_data['venue'].apply(pd.Series)], axis=1)
+    table_data = table_data[['url', 'datetime', 'location', 'name', 'street_address']]
+    table_data.columns = ['Get Details', 'Event Date', 'Location', 'Venue Name', 'Address']
+    table_data['Event Date'] = pd.to_datetime(table_data['Event Date'])
+
+    st.dataframe(table_data, hide_index=True, column_config={
+        "Get Details": st.column_config.LinkColumn("View Event Details")
+    }, column_order=("Event Date", "Location", "Venue Name", "Address", "Get Details"))
 elif category == "View available events by date":
     # TODO: Make available events by date Table
     st.title("View available events by date")
