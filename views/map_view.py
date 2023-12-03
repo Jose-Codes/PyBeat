@@ -35,7 +35,7 @@ def map_creator(locations, cities):
 def get_event_coordinates(artist_name="Metallica"):
     events_url = f"https://rest.bandsintown.com/artists/{artist_name}/events?app_id=foo"
     events = requests.get(events_url).json()
-    if isinstance(events, dict.__class__) and 'errorMessage' in events.keys():
+    if isinstance(events, dict) and 'errorMessage' in events.keys():
         st.error(events['errorMessage'])
         return None, None
     event_coordinates = [] # List of tuples
