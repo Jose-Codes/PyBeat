@@ -55,9 +55,7 @@ def map_view(artist_name="Metallica"):
     # Checkbox to toggle area filter
     st.session_state.filter_by_area = st.checkbox("Filter by area", value=False)
 
-    with st.form(key='event_form'):
-        artist_name = st.text_input("Enter artist name", value=artist_name)
-        
+    with st.form(key='event_form'):        
         if st.session_state.filter_by_area:
             # Number input for radius
             st.session_state.radius = st.number_input("Enter radius in miles", value=1000)

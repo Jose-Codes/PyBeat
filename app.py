@@ -14,8 +14,6 @@ with st.sidebar:
 if(artist):
     if category == "Map":
         # TODO: Make Map
-        st.title("Map of events")
-        st.markdown("This is a map of events in the world")
         map_view.map_view(artist)
     elif category == "Table":
         # TODO: Make Table
