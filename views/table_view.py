@@ -7,7 +7,11 @@ def display_table(artist):
     artist_events_url = f"https://rest.bandsintown.com/artists/{artist}/events?app_id=foo"
     events_result = requests.get(artist_events_url).json()
 
-    if artist and 'errorMessage' not in events_result.keys():
+    if not events_result:
+        st.warning("No events found for this artist.", icon="⚠️")
+    elif 'errorMessage' in events_result:
+        st.error("Please enter a valid artist name.", icon="⚠️")
+    else:
         df = pd.DataFrame(events_result)
         if not df.empty:
             st.title(f"Table of {artist}'s events")
@@ -32,7 +36,3 @@ def display_table(artist):
                     st.session_state.table_filter)]
                 st.dataframe(table_data, hide_index=True, column_config={"Get Details": st.column_config.LinkColumn("View Event Details")
                                                                          }, column_order=("Event Date", "Location", "Venue Name", "Address", "Get Details"))
-        else:
-            st.warning("This artist is not having any events.")
-    else:
-        st.error("Please enter a valid artist name.")
