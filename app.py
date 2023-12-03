@@ -4,6 +4,7 @@ import pandas as pd
 
 #views
 from views import events_by_country
+from views import events_per_month
 
 with st.sidebar:
     artist = st.text_input("Search an Artist")
@@ -29,9 +30,7 @@ if(artist):
         events_by_country.get_artists_events_by_country(artist)
     elif category == "View artist events per month":
         # TODO: Make artist events per month line chart
-        st.title("View artist events per month")
-        st.markdown("This is a table of events in the world")
-        st.table()
+        events_per_month.get_artists_event_per_month(artist)
     else:
         # Default page view
         st.title("Map of events")
