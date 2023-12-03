@@ -7,7 +7,7 @@ def display_table(artist):
     artist_events_url = f"https://rest.bandsintown.com/artists/{artist}/events?app_id=foo"
     events_result = requests.get(artist_events_url).json()
 
-    if artist and 'errorMessage' not in events_result.keys():
+    if isinstance(events_result, dict) and artist and 'errorMessage' not in events_result.keys():
         df = pd.DataFrame(events_result)
         if not df.empty:
             st.title(f"Table of {artist}'s events")

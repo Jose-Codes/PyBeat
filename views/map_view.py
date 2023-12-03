@@ -69,7 +69,7 @@ def map_view(artist_name="Metallica"):
     if submit_button:
         event_coordinates, event_cities = get_event_coordinates(artist_name)
             
-        if event_coordinates is not None:
+        if event_coordinates is not None and event_coordinates:
             if st.session_state.near_me:
                 user_location = get_user_location()  # You'll need to implement this function
                 filtered_coordinates, filtered_cities = filter_events_by_area(event_coordinates, event_cities, 
@@ -86,7 +86,6 @@ def map_view(artist_name="Metallica"):
                 folium_static(m)
 
         else:
-            st.error("No events found for " + artist_name)
             m = folium.Map()
             folium_static(m)
 
